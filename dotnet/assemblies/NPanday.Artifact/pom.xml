@@ -58,7 +58,7 @@
     <dependency>
       <groupId>NUnit</groupId>
       <artifactId>NUnit.Framework</artifactId>
-      <version>2.2.8.0</version>
+      <version>2.6.0</version>
       <type>dotnet-library</type>
 <!-- Temporarily disabled as it may cause issues, however cause has not been diagnosed and may be unrelated
       <scope>test</scope>

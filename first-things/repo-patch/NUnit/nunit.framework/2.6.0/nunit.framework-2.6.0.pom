@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>NUnit</groupId>
+  <artifactId>nunit.framework</artifactId>
+  <version>2.6.0</version>
+  <packaging>dotnet-library</packaging>
+  <name>NUnit :: nunit.framework</name>
+  <description>NUnit is a unit-testing framework for all .Net languages with a strong TDD focus.</description>
+  <url>http://nunit.org</url>
+  <licenses>
+    <license>
+      <url>http://nunit.org/nuget/license.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Charlie Poole</name>
+    </developer>
+  </developers>
+  <build>
+    <finalName>nunit.framework</finalName>
+  </build>
+</project>

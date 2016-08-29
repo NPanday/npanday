@@ -73,7 +73,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\NPanday.Model.Settings\target\NPanday.Model.Settings.dll</HintPath>
     </Reference>
-    <Reference Include="NUnit.Framework, Version=2.2.8.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NUnit.Framework, Version=2.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\.references\NUnit.Framework.dll</HintPath>
     </Reference>
