@@ -92,6 +92,7 @@ public final class DefaultCompiler
         compilerContext.getFrameworkVersion();
 
         List<String> commands = new ArrayList<String>();
+        List<String> referencedAssemblies = new ArrayList<String>();
 
         if(compilerContext.getOutputDirectory() != null)
         {
@@ -137,6 +138,7 @@ public final class DefaultCompiler
                 if(ArtifactTypeHelper.isDotnetAssembly(artifactType))
                 {
                     commands.add( "/reference:" + path );
+                    referencedAssemblies.add(artifact.getArtifactId());
                 }
             }
         }
@@ -207,14 +209,22 @@ public final class DefaultCompiler
                         compilerContext.getFrameworkVersion().equals("4.5.1"))) {
             String frameworkPath = System.getenv( "SystemRoot" ) + "\\Microsoft.NET\\Framework\\v4.0.30319\\";
             //TODO: This is a hard-coded path: Don't have a registry value either.
-            List<String> libraryNames = Arrays.asList("Microsoft.Build.Tasks.v4.0.dll",
-                "Microsoft.Data.Entity.Build.Tasks.dll", "Microsoft.VisualC.STLCLR.dll");
+            List<String> libraryNames = Arrays.asList(
+                "Microsoft.Build.Tasks.v4.0",
+                "Microsoft.Data.Entity.Build.Tasks",
+                "Microsoft.VisualC.STLCLR",
+                // assemblies that csc doesn't know of
+                "System.Net.Http",
+                "System.ComponentModel.DataAnnotations"
+            );
             for (String libraryName : libraryNames)
             {
-                String libraryFullName = frameworkPath + libraryName;
+                String libraryFullName = frameworkPath + libraryName + ".dll";
                 if (new File( libraryFullName ).exists())
                 {
-                    commands.add( "/reference:" + libraryFullName );
+                    if (!referencedAssemblies.contains(libraryName)) {
+                        commands.add("/reference:" + libraryFullName);
+                    }
                 }
             }
         }
