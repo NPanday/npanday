@@ -26,6 +26,7 @@ import npanday.PathUtil;
 import npanday.registry.RepositoryRegistry;
 import npanday.resolver.NPandayDependencyResolution;
 import npanday.resolver.filter.DotnetSymbolsArtifactFilter;
+import npanday.resolver.filter.DotnetVsDocsArtifactFilter;
 import npanday.resolver.filter.DotnetExecutableArtifactFilter;
 import npanday.resolver.filter.DotnetLibraryArtifactFilter;
 import npanday.resolver.filter.OrArtifactFilter;
@@ -99,6 +100,13 @@ public class CopyDependenciesMojo
     private Boolean includePdbs;
 
     /**
+     * Specifies, if xml documentation should be copied, too.
+     *
+     * @parameter default-value="true" expression="${includeVsDocs}"
+     */
+    private Boolean includeVsDocs;
+
+    /**
      * @component
      */
     private NPandayDependencyResolution dependencyResolution;
@@ -161,6 +169,10 @@ public class CopyDependenciesMojo
 
         if (includePdbs){
             typeIncludes.add( new DotnetSymbolsArtifactFilter() );
+        }
+
+        if (includeVsDocs){
+            typeIncludes.add( new DotnetVsDocsArtifactFilter() );
         }
 
         includeFilter.add( typeIncludes );

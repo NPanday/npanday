@@ -32,6 +32,7 @@ import npanday.registry.RepositoryRegistry;
 import npanday.resolver.NPandayDependencyResolution;
 import npanday.resolver.filter.DotnetAssemblyArtifactFilter;
 import npanday.resolver.filter.DotnetSymbolsArtifactFilter;
+import npanday.resolver.filter.DotnetVsDocsArtifactFilter;
 import npanday.resolver.filter.OrArtifactFilter;
 import npanday.vendor.SettingsUtil;
 import npanday.vendor.StateMachineProcessor;
@@ -163,6 +164,13 @@ public class TesterMojo
      */
     private Boolean resolvePdbs;
 
+    /**
+     * Specifies if vsdocs comment files for all dependencies should be resolved and copied to the test directory.
+     *
+     * @parameter expression = "${test.resolveVsDocs}" default-value="true"
+     */
+    private Boolean resolveVsDocs;
+
 
     private File getExecutableHome() 
     {
@@ -245,6 +253,9 @@ public class TesterMojo
 
             if (!resolvePdbs){
               filter.add(new InversionArtifactFilter(new DotnetSymbolsArtifactFilter()));
+            }
+            if (!resolveVsDocs){
+              filter.add(new InversionArtifactFilter(new DotnetVsDocsArtifactFilter()));
             }
 
             artifacts = dependencyResolution.require(

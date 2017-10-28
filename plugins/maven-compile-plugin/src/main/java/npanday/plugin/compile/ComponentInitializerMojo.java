@@ -22,6 +22,7 @@ package npanday.plugin.compile;
 import npanday.LocalRepositoryUtil;
 import npanday.resolver.NPandayDependencyResolution;
 import npanday.resolver.filter.DotnetSymbolsArtifactFilter;
+import npanday.resolver.filter.DotnetVsDocsArtifactFilter;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.InversionArtifactFilter;
@@ -75,7 +76,7 @@ public class ComponentInitializerMojo
             AndArtifactFilter filter = new AndArtifactFilter();
             filter.add(new ScopeArtifactFilter("test"));
             filter.add(new InversionArtifactFilter(new DotnetSymbolsArtifactFilter()));
-
+            filter.add(new InversionArtifactFilter(new DotnetVsDocsArtifactFilter()));
 
             dependencyResolution.require( project, LocalRepositoryUtil.create( localRepository ), filter );
         }

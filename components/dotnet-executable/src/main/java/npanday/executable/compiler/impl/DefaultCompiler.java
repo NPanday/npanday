@@ -264,7 +264,7 @@ public final class DefaultCompiler
         {
             // TODO: choose a better name for comments-xml and attach as artifact
             commands.add(
-                "/doc:" + new File( compilerContext.getTargetDirectory(), "comments.xml" ).getAbsolutePath() );
+                "/doc:" + new File( artifactFilePath.substring(0, artifactFilePath.length() - 3) + "xml" ).getAbsolutePath() );
         }
 
         CommandFilter filter = compilerContext.getCommandFilter();

@@ -22,6 +22,7 @@ import npanday.LocalRepositoryUtil;
 import npanday.registry.RepositoryRegistry;
 import npanday.resolver.NPandayDependencyResolution;
 import npanday.resolver.filter.DotnetSymbolsArtifactFilter;
+import npanday.resolver.filter.DotnetVsDocsArtifactFilter;
 import npanday.vendor.SettingsUtil;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
@@ -84,6 +85,11 @@ public class ResolveMojo
     private Boolean resolvePdbs;
 
     /**
+     * @parameter expression="${resolve.vsdocs}" default-value="false"
+     */
+    private Boolean resolveVsDocs;
+
+    /**
      * @component
      */
     private NPandayDependencyResolution dependencyResolution;
@@ -114,6 +120,9 @@ public class ResolveMojo
             filter.add(new ScopeArtifactFilter(requiredScope));
             if (!resolvePdbs){
                 filter.add(new InversionArtifactFilter(new DotnetSymbolsArtifactFilter()));
+            }
+            if (!resolveVsDocs){
+                filter.add(new InversionArtifactFilter(new DotnetVsDocsArtifactFilter()));
             }
 
             dependencyResolution.require( project, LocalRepositoryUtil.create( localRepository ), filter );

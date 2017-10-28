@@ -37,6 +37,7 @@ import npanday.registry.RepositoryRegistry;
 import npanday.resolver.NPandayDependencyResolution;
 import npanday.resolver.filter.DotnetAssemblyArtifactFilter;
 import npanday.resolver.filter.DotnetSymbolsArtifactFilter;
+import npanday.resolver.filter.DotnetVsDocsArtifactFilter;
 import npanday.resolver.filter.OrArtifactFilter;
 import npanday.vendor.SettingsUtil;
 import org.apache.maven.artifact.Artifact;
@@ -1167,6 +1168,7 @@ public abstract class AbstractCompilerMojo
             AndArtifactFilter filter = new AndArtifactFilter();
             filter.add(new ScopeArtifactFilter(scope));
             filter.add(new InversionArtifactFilter(new DotnetSymbolsArtifactFilter()));
+            filter.add(new InversionArtifactFilter(new DotnetVsDocsArtifactFilter()));
 
             dependencyResolution.require( project, LocalRepositoryUtil.create( localRepository ), filter );
         }
@@ -1266,6 +1268,8 @@ public abstract class AbstractCompilerMojo
         {
             attachPdbArtifact(artifact, classifier);
         }
+        attachVsdocsArtifact(artifact, classifier);
+
         if ( classifier != null )
         {
             getLog().debug("NPANDAY-900-014: Attaching artifact " + artifact.getPath() + " with classifier: " + classifier);
@@ -1293,6 +1297,15 @@ public abstract class AbstractCompilerMojo
        File pdbFile = new File(artifactDirectory, pdbName + "." + ArtifactType.DOTNET_SYMBOLS.getExtension());
        getLog().debug("NPANDAY-900-016: Attaching pdb project artifact " + pdbFile.getPath());
        projectHelper.attachArtifact(project, ArtifactType.DOTNET_SYMBOLS.getPackagingType(), classifier, pdbFile);
+    }
+
+    private void attachVsdocsArtifact(File artifact, String classifier)
+    {
+       File artifactDirectory = artifact.getParentFile();
+       String vsCommentsName = artifact.getName().substring(0,artifact.getName().lastIndexOf("."));
+       File vsCommentsFile = new File(artifactDirectory, vsCommentsName + "." + ArtifactType.DOTNET_VSDOCS.getExtension());
+       getLog().debug("NPANDAY-900-017: Attaching vs comments project artifact " + vsCommentsFile.getPath());
+       projectHelper.attachArtifact(project, ArtifactType.DOTNET_VSDOCS.getPackagingType(), classifier, vsCommentsFile);
     }
 
     protected abstract void initializeDefaults() throws MojoExecutionException;
