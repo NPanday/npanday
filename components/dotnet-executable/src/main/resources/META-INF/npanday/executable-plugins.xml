@@ -25,6 +25,7 @@
     <executable>tlbimp</executable>
     <profile>TLBIMP</profile>
     <frameworkVersions>
+      <frameworkVersion>4.7.2</frameworkVersion>
       <frameworkVersion>4.5.1</frameworkVersion>
       <frameworkVersion>4.5</frameworkVersion>
       <frameworkVersion>4.0</frameworkVersion>
@@ -54,6 +55,7 @@
     <executable>reg</executable>
     <profile>REG</profile>
     <frameworkVersions>
+      <frameworkVersion>4.7.2</frameworkVersion>
       <frameworkVersion>4.5.1</frameworkVersion>
       <frameworkVersion>4.5</frameworkVersion>
       <frameworkVersion>4.0</frameworkVersion>

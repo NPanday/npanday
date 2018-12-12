@@ -206,7 +206,8 @@ public final class DefaultCompiler
         if (compilerContext.getVendor().equals(Vendor.MICROSOFT) &&
                 (compilerContext.getFrameworkVersion().equals("4.0") ||
                         compilerContext.getFrameworkVersion().equals("4.5") ||
-                        compilerContext.getFrameworkVersion().equals("4.5.1"))) {
+                        compilerContext.getFrameworkVersion().equals("4.5.1") ||
+                        compilerContext.getFrameworkVersion().equals("4.7.2"))) {
             String frameworkPath = System.getenv( "SystemRoot" ) + "\\Microsoft.NET\\Framework\\v4.0.30319\\";
             //TODO: This is a hard-coded path: Don't have a registry value either.
             List<String> libraryNames = Arrays.asList(
