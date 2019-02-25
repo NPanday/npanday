@@ -171,6 +171,12 @@ public class TesterMojo
      */
     private Boolean resolveVsDocs;
 
+    /**
+     * Skip the execution of the actual test run without stopping the compilation and dependency resolution.
+     *
+     * @parameter expression = "${skipTestExecution}" default-value="false"
+     */
+    protected Boolean skipTestExecution;
 
     private File getExecutableHome() 
     {
@@ -355,8 +361,12 @@ public class TesterMojo
                     new ExecutableRequirement( vendorRequirement, profile ), commands,
                     executableHome
                 );
-
-                executable.execute();
+                
+                if (!skipTestExecution) {
+                    executable.execute();
+                } else {
+                    logTestExecutionSkipped();
+                }
             }
             catch (PlatformUnsupportedException pue)
             {
@@ -403,8 +413,12 @@ public class TesterMojo
                     }
                 } );
 
-                String executablePath = (executableHome != null) ? new File(executableHome, nunitCommand).toString() : nunitCommand;
-                commandExecutor.executeCommand( executablePath, commands );
+                if (!skipTestExecution) {
+                    String executablePath = (executableHome != null) ? new File(executableHome, nunitCommand).toString() : nunitCommand;
+                    commandExecutor.executeCommand( executablePath, commands );
+                } else {
+                    logTestExecutionSkipped();
+                }
             }
         }
         catch ( ExecutionException e )
@@ -412,5 +426,9 @@ public class TesterMojo
             String line = System.getProperty( "line.separator" );
             throw new MojoFailureException( "NPANDAY-1100-007: There are test failures." + line + line + e.getMessage(), e);
         }
+    }
+
+    private void logTestExecutionSkipped() {
+        getLog().info("NPANDAY-1100-013: Skipped executing the tests with 'skipTestExecution'-switch");
     }
 }
